@@ -20,7 +20,6 @@
 
 #include <linux/delay.h>
 #include <linux/acpi.h>
-#include <linux/input-polldev.h>
 #include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/module.h>
@@ -162,7 +161,7 @@ struct applesmc_device {
 	u8 backlight_state[2];
 
 	struct device *hwmon_dev;
-	struct input_polled_dev *idev;
+	struct input_dev *idev;
 
 	/*
 	 * Last index written to key_at_index sysfs file, and value to use for all other
@@ -1085,6 +1084,7 @@ static void applesmc_calibrate(struct applesmc_device *smc)
 	smc->rest_x = -smc->rest_x;
 }
 
+#if 0
 static void applesmc_idev_poll(struct input_polled_dev *dev)
 {
 	struct applesmc_device *smc = dev->private;
@@ -1101,6 +1101,7 @@ static void applesmc_idev_poll(struct input_polled_dev *dev)
 	input_report_abs(idev, ABS_Y, y - smc->rest_y);
 	input_sync(idev);
 }
+#endif
 
 /* Sysfs Files */
 
